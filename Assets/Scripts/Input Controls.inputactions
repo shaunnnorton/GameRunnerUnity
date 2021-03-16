@@ -57,7 +57,7 @@
                     "name": "Move",
                     "id": "4afdc3ca-fa33-428a-be7e-e224b474eeab",
                     "path": "2DVector",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.01)",
                     "processors": "",
                     "groups": "",
                     "action": "Move",

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject Player;
     public Rigidbody PlayerRB;
+    public Vector2 MoveDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -15,10 +16,15 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-      
+        if (PlayerRB.velocity.magnitude < 15) {
+            PlayerRB.AddForce(new Vector3(-MoveDirection.x, 0, -MoveDirection.y) * 30);
+        }
+        
+
     }
+
 
     public void OnFire()
     {
@@ -29,8 +35,8 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue input)
     {
         Vector2 inputValue = input.Get<Vector2>();
-        PlayerRB.AddForce(new Vector3(-inputValue.x, Player.transform.position.y, -inputValue.y)*30);
-        Debug.Log(new Vector3(inputValue.x, Player.transform.position.y, inputValue.y) * 30);
+        MoveDirection = inputValue;
+        Debug.Log(new Vector3(-inputValue.x, 0, -inputValue.y) * 30);
     }
     public void OnLook(InputValue input)
     {
