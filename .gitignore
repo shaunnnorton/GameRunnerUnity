@@ -60,4 +60,12 @@ crashlytics-build.properties
 
 env
 .env
-__pycache__
+__pycache__*
+*.py.meta
+*.db.meta
+*.txt.meta
+*.html.meta
+main.meta
+api_app.meta
+*.env.meta
+env.meta

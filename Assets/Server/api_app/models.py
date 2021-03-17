@@ -14,7 +14,10 @@ class Game(db.Model):
     title = db.Column(db.String(80))
     box_art = db.Column(db.String(200))
     users = db.relationship('User',secondary="user_game", back_populates="games")
-
+    def __str__(self):
+        return f'<Game: {self.title}>'
+    def __repr__(self):
+        return f'<Game: {self.title}>'
 
 user_game_table = db.Table('user_game',
     db.Column('user_id',db.Integer,db.ForeignKey('user.id')),

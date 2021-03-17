@@ -1,7 +1,9 @@
 from flask import Blueprint,request,jsonify, redirect, url_for
+import requests
 from api_app.models import User, Game
 from dotenv import load_dotenv
 import os
+from pprint import PrettyPrinter
 load_dotenv()
 
 from api_app import app, db, bcyrpt
@@ -40,5 +42,45 @@ def create_user():
     response = {
         "Response":"ERROR",
         "Data":["ERROR PROCESSING REQUEST CHECK KEY AND REQUIRED PARAMETERS"]
+    }
+    return jsonify(response)
+
+@main.route("/API/Add/Games", methods=['POST'])
+def append_user_games():
+    
+    response_key = request.form.get('KEY')
+    response_name = request.form.get('NAME')
+    response_password = request.form.get("PASSWORD")
+    response_games = request.form.getlist("GAMES")
+    user = User.query.filter_by(name=response_name).first()
+    
+    if user and bcyrpt.check_password_hash(bcyrpt.generate_password_hash(os.getenv("SECRET_PASSCODE")),
+        response_key):
+        response = {
+            "Response":"SUCCESS",
+            "Data":[{"USER_GAMES":list()}]
+        }
+        for game in response_games:
+            url = 'https://api.rawg.io/api/games'
+            params = {
+                'key':os.getenv('API_KEY'),
+                'search':game,
+                'page':1,
+                'page_size':1
+            }
+            results = requests.get(url, params=params).json()
+            new_game = Game(title=game,box_art=results['results'][0]['background_image'])
+            user.games.append(new_game)
+            db.session.commit()
+        for game in user.games:
+            response['Data'][0]['USER_GAMES'].append(game.__repr__())
+
+        
+        return jsonify(response)
+    
+    
+    response = {
+    "Response":"ERROR",
+    "Data":["ERROR PROCESSING REQUEST CHECK KEY AND REQUIRED PARAMETERS"]
     }
     return jsonify(response)
