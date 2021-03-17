@@ -84,3 +84,32 @@ def append_user_games():
     "Data":["ERROR PROCESSING REQUEST CHECK KEY AND REQUIRED PARAMETERS"]
     }
     return jsonify(response)
+
+
+@main.route('/API/GET/USERIMAGES',methods=["POST"])
+def get_game_image():
+    response_key = request.form.get('KEY')
+    response_name = request.form.get('NAME')
+    response_password = request.form.get("PASSWORD")
+    user = User.query.filter_by(name=response_name).first()
+    
+    if user and bcyrpt.check_password_hash(bcyrpt.generate_password_hash(os.getenv("SECRET_PASSCODE")),
+        response_key):
+        response = {
+            "Response":"SUCCESS",
+            "Data":[{"USER_GAMES":list()}]
+        }
+        for game in user.games:
+            game_data = {
+                'title':game.title,
+                'image':game.box_art
+            }
+            
+            response['Data'][0]['USER_GAMES'].append(game_data)
+        return jsonify(response)
+
+    response = {
+        "Response":"ERROR",
+        "Data":["ERROR PROCESSING REQUEST CHECK KEY AND REQUIRED PARAMETERS"]
+    }
+    return jsonify(response)
