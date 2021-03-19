@@ -27,9 +27,10 @@ public class EnemyController : MonoBehaviour
     {
         Enemy.transform.LookAt(Player.transform);
 
+        
         if (EnemyRB.velocity.magnitude < 25)
         {
-            EnemyRB.AddRelativeForce(Vector3.forward * 0.5f);
+            EnemyRB.AddRelativeForce(Vector3.forward * 6f);
         }
     }
 

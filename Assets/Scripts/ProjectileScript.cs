@@ -25,7 +25,16 @@ public class ProjectileScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        ProjectileRB.AddRelativeForce(Vector3.forward * 80);
+        int layerMask = 1 << 6;
+        ProjectileRB.AddRelativeForce(Vector3.forward * 30f);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 1, layerMask))
+        {
+            Destroy(hit.transform.gameObject);
+            Destroy(Projectile);
+            Debug.Log(hit.transform.gameObject.tag);
+        }
+        
     }
     IEnumerator DestroyAfter()
     {

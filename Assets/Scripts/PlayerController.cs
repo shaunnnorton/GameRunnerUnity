@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 MoveDirection;
     public GameObject Projectile;
     public CharacterController Controller;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
         /*if (PlayerRB.velocity.magnitude < 15) {
             PlayerRB.AddForce(new Vector3(-MoveDirection.x, 0, -MoveDirection.y) * 30);
         }*/
-        Controller.Move(new Vector3(-MoveDirection.x, 0, -MoveDirection.y));
+        Controller.Move(new Vector3(MoveDirection.x, 0, MoveDirection.y) * Time.deltaTime * speed) ;
 
     }
 
@@ -34,13 +35,17 @@ public class PlayerController : MonoBehaviour
         Instantiate(Projectile, Player.transform.position, Player.transform.rotation);
     }
     public void OnMove(InputValue input)
-    {
+    { 
+        Debug.Log(input.Get());
+
         Vector2 inputValue = input.Get<Vector2>();
         MoveDirection = inputValue;
-        Debug.Log(new Vector3(-inputValue.x, 0, -inputValue.y) * 30);
+
     }
     public void OnLook(InputValue input)
     {
+        
+
         Vector2 LookVector = input.Get<Vector2>();
         Vector3 LookPoint;
 

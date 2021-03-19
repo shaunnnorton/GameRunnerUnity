@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             int spawnDistance = Random.Range(15, 20);
             Vector3 spawnPos = Random.onUnitSphere * spawnDistance;
-            Vector3 actualSpawn = new Vector3(PlayerPos.x + spawnPos.x, PlayerPos.y, PlayerPos.z + spawnPos.z);
+            Vector3 actualSpawn = new Vector3(PlayerPos.x + spawnPos.x, PlayerPos.y + 1, PlayerPos.z + spawnPos.z);
             Instantiate(enemyPrefab, actualSpawn,Quaternion.identity);
             counter--;
         }
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
             EnemyController enemyScript;
             enemyScript = enemy.GetComponent<EnemyController>();
             int ImageNumber = Random.Range(0, images.Count - 1);
-            Debug.Log(ImageNumber);
+            //Debug.Log(ImageNumber);
             enemyScript.image_url = images[ImageNumber];
             enemy.SendMessage("SetImage");
         }
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
             // Show results as text
             /*Debug.Log(request.downloadHandler.text);*/
             var ggg = JSON.Parse( request.downloadHandler.text);
-            Debug.Log(ggg["Data"]);
+            //Debug.Log(ggg["Data"]);
             foreach (var image in ggg["Data"][0]["USER_GAMES"])
             {
                 var values = JSON.Parse(image.ToString());
