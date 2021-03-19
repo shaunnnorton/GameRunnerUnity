@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Fire",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "4d580d57-41e9-49fe-a2c0-f651bc0d7df3",
-                    "expectedControlType": "Analog",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -56,8 +56,8 @@
                 {
                     "name": "Move",
                     "id": "4afdc3ca-fa33-428a-be7e-e224b474eeab",
-                    "path": "2DVector",
-                    "interactions": "Hold(duration=0.01)",
+                    "path": "2DVector(mode=1)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Move",

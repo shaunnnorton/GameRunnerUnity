@@ -11,14 +11,16 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject Player;
     public List<string> images;
-
+    public string username;
+    public string password;
+    
 
     void Start()
     {
-        
+        username = PlayerPrefs.GetString("Username");
+        password = PlayerPrefs.GetString("Password");
         SpawnEnemies(10);
         StartCoroutine(GetImages());
-
     }
 
     // Update is called once per frame
@@ -33,8 +35,9 @@ public class GameManager : MonoBehaviour
         int counter = enemy_amount;
         while (counter > 0)
         {
-            Vector2 spawnPos = Random.insideUnitCircle * 15;
-            Vector3 actualSpawn = new Vector3(PlayerPos.x + spawnPos.x, PlayerPos.y, PlayerPos.z + spawnPos.y);
+            int spawnDistance = Random.Range(15, 20);
+            Vector3 spawnPos = Random.onUnitSphere * spawnDistance;
+            Vector3 actualSpawn = new Vector3(PlayerPos.x + spawnPos.x, PlayerPos.y, PlayerPos.z + spawnPos.z);
             Instantiate(enemyPrefab, actualSpawn,Quaternion.identity);
             counter--;
         }
@@ -43,7 +46,6 @@ public class GameManager : MonoBehaviour
     public void EnemyImages()
     {
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        int counter = 0;
         foreach(GameObject enemy in enemies)
         {
 
@@ -52,14 +54,15 @@ public class GameManager : MonoBehaviour
             int ImageNumber = Random.Range(0, images.Count - 1);
             Debug.Log(ImageNumber);
             enemyScript.image_url = images[ImageNumber];
+            enemy.SendMessage("SetImage");
         }
     }
 
     IEnumerator GetImages()
     {
         string API_KEY = "TURKEYDAY";
-        string NAME = "SHAUN";
-        string PASSWORD = "PASSWORD";
+        string NAME = username;
+        string PASSWORD =password;
         WWWForm data = new WWWForm();
         data.AddField("KEY", API_KEY);
         data.AddField("NAME", NAME);

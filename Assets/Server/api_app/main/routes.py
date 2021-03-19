@@ -51,16 +51,19 @@ def append_user_games():
     response_key = request.form.get('KEY')
     response_name = request.form.get('NAME')
     response_password = request.form.get("PASSWORD")
-    response_games = request.form.getlist("GAMES")
+    response_games = request.form.get("GAMES")
     user = User.query.filter_by(name=response_name).first()
-    
+    game_list = response_games.split(",")
+
+
+
     if user and bcyrpt.check_password_hash(bcyrpt.generate_password_hash(os.getenv("SECRET_PASSCODE")),
         response_key):
         response = {
             "Response":"SUCCESS",
             "Data":[{"USER_GAMES":list()}]
         }
-        for game in response_games:
+        for game in game_list:
             url = 'https://api.rawg.io/api/games'
             params = {
                 'key':os.getenv('API_KEY'),
@@ -113,3 +116,21 @@ def get_game_image():
         "Data":["ERROR PROCESSING REQUEST CHECK KEY AND REQUIRED PARAMETERS"]
     }
     return jsonify(response)
+
+
+@main.route("/API/User", methods=["POST"])
+def check_user():
+    username = request.form.get("NAME")
+    user = User.query.filter_by(name=username).first()
+    if user:
+        response = {
+            "Response":"SUCCESS",
+            "Data":f"USER EXISTS WITH USERNAME:{user.name}"
+        }
+        return jsonify(response)
+    else:
+        response = {
+            "Response":"ERROR",
+            "Data":f"USER DOES NOT EXIST WITH USERNAME:{username}"
+        }
+        return jsonify(response)

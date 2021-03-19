@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject Player;
     public Rigidbody PlayerRB;
     public Vector2 MoveDirection;
+    public GameObject Projectile;
+    public CharacterController Controller;
 
     // Start is called before the first frame update
     void Start()
@@ -18,19 +21,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (PlayerRB.velocity.magnitude < 15) {
+        /*if (PlayerRB.velocity.magnitude < 15) {
             PlayerRB.AddForce(new Vector3(-MoveDirection.x, 0, -MoveDirection.y) * 30);
-        }
-        
+        }*/
+        Controller.Move(new Vector3(-MoveDirection.x, 0, -MoveDirection.y));
 
     }
 
 
     public void OnFire()
     {
-
-        Vector3 newVector = Vector3.forward;
-        PlayerRB.AddForce(Vector3.up);
+        Instantiate(Projectile, Player.transform.position, Player.transform.rotation);
     }
     public void OnMove(InputValue input)
     {
@@ -56,6 +57,13 @@ public class PlayerController : MonoBehaviour
 
         /*Debug.Log(input.Get<Vector2>());*/
         
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            SceneManager.LoadScene("WorldScene");
+        }
     }
 }
 

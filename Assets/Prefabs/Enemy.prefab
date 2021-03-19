@@ -8,11 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6356859087489387735}
+  - component: {fileID: 7632904631856640554}
   - component: {fileID: 6356859087489387734}
   - component: {fileID: 6356859087489387737}
   - component: {fileID: 6865049989662372378}
   - component: {fileID: 4304396940092942786}
+  - component: {fileID: 4943473275508305908}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -20,20 +21,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6356859087489387735
-Transform:
+--- !u!224 &7632904631856640554
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6356859087489387739}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.041658, y: 6.401851, z: -13.47}
-  m_LocalScale: {x: 0.17133808, y: 2.019718, z: 1.3427899}
+  m_LocalRotation: {x: -0.05164357, y: 0.23915309, z: 0.28328565, w: 0.92730147}
+  m_LocalPosition: {x: 0, y: 0, z: -13.47}
+  m_LocalScale: {x: 1.5911363, y: 2.019718, z: 0.13495038}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -13.372, y: 25.203, z: 30.973}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 10.9135, y: -93.4501}
+  m_SizeDelta: {x: 8.114, y: 1.1228}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6356859087489387734
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a891e553f62cb42f49d5d9b206d141de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,8 +106,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2fadc400cf8e455c90e30bb17b1e6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemy: {fileID: 6356859087489387739}
+  EnemyRB: {fileID: 4943473275508305908}
+  EnemyRenderer: {fileID: 6356859087489387734}
   id: 0
   image_url: 
+  matPrefab: {fileID: 2100000, guid: a891e553f62cb42f49d5d9b206d141de, type: 2}
+  thismaterial: {fileID: 0}
+  texture: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!33 &4304396940092942786
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110,3 +123,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6356859087489387739}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &4943473275508305908
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6356859087489387739}
+  serializedVersion: 2
+  m_Mass: 0.5
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0

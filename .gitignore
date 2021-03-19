@@ -69,3 +69,6 @@ main.meta
 api_app.meta
 *.env.meta
 env.meta
+
+
+Assets/TextMesh*
