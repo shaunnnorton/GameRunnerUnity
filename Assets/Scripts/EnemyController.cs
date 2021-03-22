@@ -14,23 +14,31 @@ public class EnemyController : MonoBehaviour
     public Material thismaterial;
     public Texture texture;
     public GameObject Player;
+    public float speed;
+    public GameManager gameManager;
+    public bool gamestate;
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gamestate = gameManager.gamestate;
+
+
         Player = GameObject.FindGameObjectWithTag("Player");
         EnemyRenderer = Enemy.GetComponent<MeshRenderer>();
-        
+        StartCoroutine(StartGame());
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        gamestate = gameManager.gamestate;
         Enemy.transform.LookAt(Player.transform);
 
         
-        if (EnemyRB.velocity.magnitude < 25)
+        if (EnemyRB.velocity.magnitude < 2)
         {
-            EnemyRB.AddRelativeForce(Vector3.forward * 6f);
+            EnemyRB.AddRelativeForce(Vector3.forward * speed) ;
         }
     }
 
@@ -52,4 +60,14 @@ public class EnemyController : MonoBehaviour
         thismaterial.mainTexture = texture;
         EnemyRenderer.material = thismaterial;
     }
+
+    IEnumerator StartGame()
+    {
+        float temp = speed;
+        speed = 0;
+        yield return new WaitUntil(() => gamestate == true);
+        yield return new WaitForSeconds(1);
+        speed = temp;
+    }
+
 }

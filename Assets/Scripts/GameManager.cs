@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,22 +13,37 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject Player;
     public List<string> images;
-    public string username;
-    public string password;
-    
+    private string username;
+    private string password;
+    public TMP_Text scoreText;
+    public TMP_Text enemyText;
+    public TMP_Text levelText;
+    [System.NonSerialized]
+    public int score;
+    [System.NonSerialized]
+    public int enemyCount;
+    [System.NonSerialized]
+    private int level;
+    public bool gamestate;
+    private int enemySpawn = 10;
+    public TMP_Text Loading_Text;
+    public GameObject Loading_Screen;
+    public GameObject LoadingBG;
+
 
     void Start()
     {
-        username = PlayerPrefs.GetString("Username");
-        password = PlayerPrefs.GetString("Password");
-        SpawnEnemies(10);
-        StartCoroutine(GetImages());
+        StartCoroutine(RunGame());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(enemyCount);
+        if (enemyCount == 0 && level > 0)
+        {
+            StartCoroutine(NextLevel());
+        }
     }
 
     public void SpawnEnemies(int enemy_amount)
@@ -37,7 +54,7 @@ public class GameManager : MonoBehaviour
         {
             int spawnDistance = Random.Range(15, 20);
             Vector3 spawnPos = Random.onUnitSphere * spawnDistance;
-            Vector3 actualSpawn = new Vector3(PlayerPos.x + spawnPos.x, PlayerPos.y + 1, PlayerPos.z + spawnPos.z);
+            Vector3 actualSpawn = new Vector3(PlayerPos.x + spawnPos.x, PlayerPos.y + 0.5f, PlayerPos.z + spawnPos.z);
             Instantiate(enemyPrefab, actualSpawn,Quaternion.identity);
             counter--;
         }
@@ -48,6 +65,11 @@ public class GameManager : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(GameObject enemy in enemies)
         {
+            if(images.Count == 0)
+            {
+                return;
+            }
+
 
             EnemyController enemyScript;
             enemyScript = enemy.GetComponent<EnemyController>();
@@ -98,4 +120,80 @@ public class GameManager : MonoBehaviour
         }
         EnemyImages();
     }
+    IEnumerator RunGame()
+    {
+        username = PlayerPrefs.GetString("Username");
+        password = PlayerPrefs.GetString("Password");
+        SpawnEnemies(enemySpawn);
+        yield return new WaitForEndOfFrame();
+        yield return StartCoroutine(GetImages());
+        Debug.Log("GOTIMAGES");
+        enemyCount = enemies.Length;
+        score = 0;
+        level = 1;
+        enemyText.text = "Enemies Left: " + enemyCount.ToString();
+        scoreText.text = "Score: " + score.ToString();
+        levelText.text = level.ToString();
+        yield return new WaitForSeconds(3);
+        int counter = 10;
+        while (counter > 0)
+        {
+            Loading_Text.text = counter.ToString();
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        Loading_Screen.SetActive(false);
+        gamestate = true;
+    }
+
+    public void UpdateUI()
+    {
+        enemyText.text = "Enemies Left: " + enemyCount.ToString();
+        scoreText.text = "Score: " + score.ToString();
+        levelText.text = level.ToString();
+        
+    }
+
+    
+
+    IEnumerator NextLevel()
+    {
+        level++;
+        enemyCount = 1111;
+        Debug.Log("Starting Next Level");
+        gamestate = false;
+        Loading_Text.text = "LEVEL COMPLETE";
+        Loading_Text.color = new Color(255, 215, 0, 1);
+        Image Loadingimage = LoadingBG.GetComponent<Image>();
+        Loadingimage.color = new Color(0,0,0,0);
+        Loading_Screen.SetActive(true);
+        Loadingimage.color = new Color(0, 0, 0, 0);
+        while (Loadingimage.color.a < 1)
+        {
+            yield return new WaitForSeconds(0.05f);
+            Loadingimage.color = new Color(0,0,0,Loadingimage.color.a +0.01f);
+        }
+        enemySpawn++;
+        SpawnEnemies(enemySpawn);
+        yield return new WaitForEndOfFrame();
+        yield return StartCoroutine(GetImages());
+        Debug.Log("GOTIMAGES");
+        enemyCount = enemies.Length;
+        UpdateUI();
+        int counter = 10;
+        while (counter > 0)
+        {
+            Loading_Text.text = counter.ToString();
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        Loading_Screen.SetActive(false);
+        gamestate = true;
+    }
+
+    public void gameOver()
+    {
+        gamestate = false;
+    }
 }
+

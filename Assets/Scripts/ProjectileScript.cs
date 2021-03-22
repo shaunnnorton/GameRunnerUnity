@@ -9,11 +9,12 @@ public class ProjectileScript : MonoBehaviour
     public GameObject Projectile;
     private Collider ProjectileCollider;
     public Rigidbody ProjectileRB;
-
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         Player = GameObject.FindGameObjectWithTag("Player");
         PlayerCollider = Player.GetComponent<Collider>();
         ProjectileCollider = Projectile.GetComponent<Collider>();
@@ -30,6 +31,9 @@ public class ProjectileScript : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 1, layerMask))
         {
+            gameManager.score += 50;
+            gameManager.enemyCount--;
+            gameManager.SendMessage("UpdateUI");
             Destroy(hit.transform.gameObject);
             Destroy(Projectile);
             Debug.Log(hit.transform.gameObject.tag);
@@ -45,8 +49,12 @@ public class ProjectileScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
+            gameManager.score += 50;
+            gameManager.enemyCount--;
+            gameManager.SendMessage("UpdateUI");
             Destroy(collision.gameObject);
             Destroy(Projectile);
+
         }
     }
 

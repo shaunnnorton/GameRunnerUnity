@@ -128,3 +128,4 @@ MonoBehaviour:
   Player: {fileID: 0}
   Projectile: {fileID: 8720534129919438513}
   ProjectileRB: {fileID: 290005619137890246}
+  gameManager: {fileID: 0}

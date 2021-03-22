@@ -12,11 +12,14 @@ public class PlayerController : MonoBehaviour
     public GameObject Projectile;
     public CharacterController Controller;
     public float speed;
+    public bool gamestate;
+    public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gamestate = gameManager.gamestate;
+        StartCoroutine(StartGame());
     }
 
     // Update is called once per frame
@@ -25,6 +28,8 @@ public class PlayerController : MonoBehaviour
         /*if (PlayerRB.velocity.magnitude < 15) {
             PlayerRB.AddForce(new Vector3(-MoveDirection.x, 0, -MoveDirection.y) * 30);
         }*/
+        gamestate = gameManager.gamestate;
+
         Controller.Move(new Vector3(MoveDirection.x, 0, MoveDirection.y) * Time.deltaTime * speed) ;
 
     }
@@ -70,5 +75,16 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("WorldScene");
         }
     }
+
+
+    IEnumerator StartGame()
+    {
+        float temp = speed;
+        speed = 0;
+        yield return new WaitUntil(() => gamestate == true);
+        speed = temp;
+    }
+
+
 }
 
