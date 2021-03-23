@@ -34,11 +34,15 @@ public class EnemyController : MonoBehaviour
     {
         gamestate = gameManager.gamestate;
         Enemy.transform.LookAt(Player.transform);
-
+        if(speed == 0)
+        {
+            EnemyRB.velocity = Vector3.zero; 
+        }
         
         if (EnemyRB.velocity.magnitude < 2)
         {
-            EnemyRB.AddRelativeForce(Vector3.forward * speed) ;
+            /*EnemyRB.AddRelativeForce(Vector3.forward * speed) ;*/
+            Enemy.transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
     }
 

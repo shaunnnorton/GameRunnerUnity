@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using SimpleJSON;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,12 @@ public class GameManager : MonoBehaviour
     public TMP_Text Loading_Text;
     public GameObject Loading_Screen;
     public GameObject LoadingBG;
+    public GameObject GameOverScreen;
+    public GameObject PauseScreen;
+    public bool isPaused;
+
+    public PlayerController playerController;
+
 
 
     void Start()
@@ -194,6 +201,44 @@ public class GameManager : MonoBehaviour
     public void gameOver()
     {
         gamestate = false;
+        GameOverScreen.SetActive(true);
+
+    }
+    public void restart()
+    {
+        SceneManager.LoadScene("WorldScene");
+    }
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Title Scene");
+    }
+
+    public void Pause(bool method)
+    { 
+        foreach (GameObject enemy in enemies)
+        {
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            if (method == true)
+            {
+                enemyController.speed = 0;
+            }
+            else
+            {
+                enemyController.speed = 0.5f;
+            }
+        }
+        if(method == true)
+        {
+            isPaused = true;
+            playerController.speed = 0;
+            PauseScreen.SetActive(true);
+        }
+        else
+        {
+            PauseScreen.SetActive(false);
+            isPaused = false;
+            playerController.speed = 5;
+        }
     }
 }
 

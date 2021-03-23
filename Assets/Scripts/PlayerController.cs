@@ -68,11 +68,27 @@ public class PlayerController : MonoBehaviour
         /*Debug.Log(input.Get<Vector2>());*/
         
     }
+
+    public void OnPause()
+    {
+        if(gameManager.isPaused == false)
+        {
+            gameManager.SendMessage("Pause",true);
+        }
+        else
+        {
+            gameManager.SendMessage("Pause", false);
+        }
+    }
+
+
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            SceneManager.LoadScene("WorldScene");
+            gameManager.SendMessage("gameOver");
         }
     }
 

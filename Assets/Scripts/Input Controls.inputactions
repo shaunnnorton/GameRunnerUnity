@@ -28,6 +28,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "76870590-d733-496b-82db-8ac14a084334",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -37,7 +45,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "New control scheme;New control scheme1",
+                    "groups": "New control scheme",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -48,7 +56,7 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "New control scheme;New control scheme1",
+                    "groups": "New control scheme",
                     "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -81,7 +89,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme1",
+                    "groups": "New control scheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -92,7 +100,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme1",
+                    "groups": "New control scheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -103,7 +111,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme1",
+                    "groups": "New control scheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -114,10 +122,21 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "New control scheme1",
+                    "groups": "New control scheme",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b56776d0-0630-4da4-83a5-08e42d9e8e08",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -131,13 +150,7 @@
                     "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "New control scheme1",
-            "bindingGroup": "New control scheme1",
-            "devices": [
+                },
                 {
                     "devicePath": "<Keyboard>",
                     "isOptional": false,
