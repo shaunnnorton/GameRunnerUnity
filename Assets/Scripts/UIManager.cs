@@ -53,13 +53,13 @@ public class UIManager : MonoBehaviour
             data.AddField("PASSWORD", PASSWORD);
 
             UnityWebRequest request;
-            request = UnityWebRequest.Post("http://127.0.0.1:5000/API/Create/User", data);
+            request = UnityWebRequest.Post("https://gamedestroyer.herokuapp.com/API/Create/User", data);
 
             yield return request.SendWebRequest();
 
             data.AddField("GAMES", CreateGames.text);
 
-            request = UnityWebRequest.Post("http://127.0.0.1:5000/API/Add/Games", data);
+            request = UnityWebRequest.Post("https://gamedestroyer.herokuapp.com/API/Add/Games", data);
             request.downloadHandler = new DownloadHandlerBuffer();
 
             yield return request.SendWebRequest();
@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
 
         UnityWebRequest request;
 
-        request = UnityWebRequest.Post("http://127.0.0.1:5000/API/User", data);
+        request = UnityWebRequest.Post("https://gamedestroyer.herokuapp.com/API/User", data);
         request.downloadHandler = new DownloadHandlerBuffer();
 
         yield return request.SendWebRequest();
