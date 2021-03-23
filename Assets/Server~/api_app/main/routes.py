@@ -1,4 +1,4 @@
-from flask import Blueprint,request,jsonify, redirect, url_for
+from flask import Blueprint,request,jsonify, redirect, url_for, render_template, send_file
 import requests
 from api_app.models import User, Game
 from dotenv import load_dotenv
@@ -14,12 +14,16 @@ main = Blueprint('main',__name__)
 
 @main.route('/')
 def home_response():
-    response = {
-        "Response":"GOOD",
-        "Data":None
-    }
     
-    return jsonify(response)
+    return render_template("index.html")
+
+@main.route("/DownloadOsx")
+def download_mac():
+    return send_file('static/GameCrusherMAC1.0.app.zip')
+
+@main.route("/DownloadWin")
+def download_windows():
+    return send_file("static/GameCrusherWin1.0.zip")
 
 @main.route('/API/Create/User',methods=['POST'])
 def create_user():
