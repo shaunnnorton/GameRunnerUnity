@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                enemyController.speed = 0.5f;
+                enemyController.speed = 1.5f;
             }
         }
         if(method == true)

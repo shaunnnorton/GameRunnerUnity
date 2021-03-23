@@ -193,7 +193,7 @@ def append_user_games():
                 db.session.commit()
             
 
-                pp.pprint(results['results'][0]["image"]["original_url"])
+                #pp.pprint(results['results'][0]["image"]["original_url"])
 
            
         for game in user.games:
